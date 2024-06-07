@@ -46,3 +46,28 @@
         (else z)))
 
 (define (square x) (* x x))
+
+;; exercise 1.8
+(define (one-third x)
+  (/ x 3.0))
+
+(define (square x) (* x x))
+
+(define (div-by-square x y)
+  (/ x (square y)))
+
+(define (improve guess x)
+  (one-third (+ (div-by-square x guess) (+ 2.0 guess))))
+
+(define (cube-root x) (* x x x))
+
+(define (good-enough? guess x)
+  (< (abs (- (cube-root guess) x)) 1))
+
+(define (cbrt-iter guess x)
+  (if (good-enough? guess x)
+      guess
+      (cbrt-iter (improve guess x) x)))
+
+(define (cbrt x)
+  (cbrt-iter 1.0 x))
