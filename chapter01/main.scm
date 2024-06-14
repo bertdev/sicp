@@ -46,3 +46,17 @@
 
 (define (sqrt x)
   (sqrt-iter 1.0 x))
+
+;; using procedure internalization to solve name-packagin problems
+(define (sqrt x)
+  (define (good-enough guess)
+    (< (abs (- (square guess) x)) 0.001))
+  (define (improve guess)
+    (average guess (/ x guess)))
+  (define (sqrt-iter guess)
+    (if (good-enough guess)
+        guess
+        (sqrt-iter (improve guess))))
+  (if (good-enough guess x)
+    guess
+    (sqrt-iter (improve guess))))
